@@ -1,4 +1,11 @@
 {
+  "name": "chatterbot",
+  "version": "0.1.0",
+  "description": "A Joystick.tv chat bot",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
   "license": "MIT",
   "private": true,
   "type": "module",
