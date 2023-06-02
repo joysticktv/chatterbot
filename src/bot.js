@@ -93,19 +93,25 @@ const Bot = {
           Bot.channels = Bot.channels.filter((c)=> c.id !== channelId);
           break;
         case "new_message":
-          channel.resetTimer();
+          if (channel) {
+            channel.resetTimer();
+          }
           break;
         case "enter_stream":
-          user = {name: message.text, id: channelId};
-          if (!channel.hasUser(user)) {
-            channel.addUser(user);
+          if (channel) {
+            user = {name: message.text, id: channelId};
+            if (!channel.hasUser(user)) {
+              channel.addUser(user);
+            }
           }
 
           break;
         case "leave_stream":
-          user = {name: message.text, id: channelId};
-          if (channel.hasUser(user)) {
-            channel.removeUser(user);
+          if (channel) {
+            user = {name: message.text, id: channelId};
+            if (channel.hasUser(user)) {
+              channel.removeUser(user);
+            }
           }
 
           break;
