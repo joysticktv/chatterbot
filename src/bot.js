@@ -82,7 +82,7 @@ const Bot = {
       let user;
       console.log("FOUND CHANNEL?", channel)
 
-      switch(message.type) {
+      switch(message.type.toLowerCase()) {
         case "started":
           console.log("A NEW STREAM HAS STARTED")
           if (!channel) {
