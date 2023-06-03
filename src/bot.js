@@ -3,7 +3,7 @@ const gatewayIdentifier = JSON.stringify({channel: "GatewayChannel"});
 
 // return a random time length. This is number of minutes
 const waiverTime = ()=> {
-  const times = [1.5, 2.0, 2.25, 2.5, 2.75, 3, 3.5, 4];
+  const times = [2.5, 3.0, 3.25, 3.5, 3.75, 4, 4.5, 5, 7, 10];
   return times[Math.floor(Math.random() * times.length)];
 }
 
@@ -80,13 +80,10 @@ const Bot = {
       const channelId = message.channelId;
       let channel = Bot.channels.find((c)=> c.id === channelId);
       let user;
-      console.log("FOUND CHANNEL?", channel)
 
       switch(message.type.toLowerCase()) {
         case "started":
-          console.log("A NEW STREAM HAS STARTED")
           if (!channel) {
-            console.log("creating a new channel")
             channel = new Channel(channelId, (response)=> {
               ws.send(JSON.stringify(response));
             });
@@ -94,18 +91,16 @@ const Bot = {
           }
           break;
         case "ended":
-          console.log("A STREAM HAS ENDED")
           Bot.channels = Bot.channels.filter((c)=> c.id !== channelId);
           break;
         case "new_message":
           if (channel) {
-            console.log("resetting timer")
             channel.resetTimer();
           }
           break;
         case "enter_stream":
           if (channel) {
-            console.log("entering the stream", message.text)
+            console.log(message.text, "has entered the stream")
             user = {name: message.text, id: channelId};
             if (!channel.hasUser(user)) {
               channel.addUser(user);
@@ -115,7 +110,7 @@ const Bot = {
           break;
         case "leave_stream":
           if (channel) {
-            console.log("leaving the stream", message.text)
+            console.log(message.text, "has left the stream")
             user = {name: message.text, id: channelId};
             if (channel.hasUser(user)) {
               channel.removeUser(user);
