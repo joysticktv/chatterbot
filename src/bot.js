@@ -110,7 +110,7 @@ const Bot = {
         case "new_message":
           const author = message.author;
           if (channel) {
-            if ((message.text === "@chatterbot lurk") && (author.isStreamer && author.isModerator)) {
+            if ((message.text === "@chatterbot lurk") && (author.isStreamer || author.isModerator)) {
               channel.silence();
               const response = {
                 command: "message",
@@ -122,7 +122,7 @@ const Bot = {
                 })
               };
               ws.send(JSON.stringify(response));
-            } else if ((message.text === "@chatterbot yo") && (author.isStreamer && author.isModerator)) {
+            } else if ((message.text === "@chatterbot yo") && (author.isStreamer || author.isModerator)) {
               channel.resume();
               const response = {
                 command: "message",
