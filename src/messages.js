@@ -100,7 +100,7 @@ const getRandomMessage = (username)=> {
     `Echo..... echo....`,
     `Hello?`,
     `The more you talk, the less I talk.`,
-    `If the streamer has a toy activate, your tips make them go bzzzzzz`,
+    `If the streamer has a toy active, your tips make them go bzzzzzz`,
     `Of all the friends I've had, you're the first, @${username}.`,
     `Allow me to introduce myself. I'm ChatterBot.`,
     `Have you ever squished mashed potatoes and gravy between your toes? Yeah, me neither... 😬`,
@@ -121,6 +121,7 @@ const getRandomMessage = (username)=> {
     `Hey! Listen!`,
     `Do a barrel roll`,
     `Science isn't about why. It's about why not!`,
+    `Excelsior!`,
   ];
   return messages[Math.floor(Math.random() * messages.length)];
 }
