@@ -110,6 +110,17 @@ const getRandomMessage = (username)=> {
     `If you see a wheel, you must now spin it.`,
     `.--- --- -.- . That's just a joke in morse code.`,
     `You're sexy and you know it.`,
+    `Did you know you can tip from Paypal? Ask a developer for more info.`,
+    `Did anyone else cry during Beverly Hills Chihuahua 2? Just me? ok....`,
+    `Here's the beer. Here's the entertainment. Now have fun. That's an order.`,
+    `You see a bug hole, YOU NUKE IT!`,
+    `Mind tricks don't work on me.`,
+    `You know, sometimes I amaze even myself.`,
+    `Please keep your hands and feet inside the stream at all times.`,
+    `Bring me a bucket, and I'll show you a bucket.`,
+    `Hey! Listen!`,
+    `Do a barrel roll`,
+    `Science isn't about why. It's about why not!`,
   ];
   return messages[Math.floor(Math.random() * messages.length)];
 }
