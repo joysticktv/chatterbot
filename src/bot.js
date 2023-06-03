@@ -12,11 +12,13 @@ class Channel {
   usernames;
   timer;
   cb;
+  silent;
   constructor(id, cb) {
     this.id = id;
     this.usernames = [];
     this.timer = null;
     this.cb = cb;
+    this.silent = false;
     this.startTimer();
   }
 
@@ -32,9 +34,21 @@ class Channel {
     return this.usernames.map((u) => u.name).includes(user.name);
   }
 
-  resetTimer() {
+  silence() {
     this.clearTimer();
-    this.startTimer();
+    this.silent = true;
+  }
+
+  resume() {
+    this.silent = false;
+    this.resetTimer();
+  }
+
+  resetTimer() {
+    if (!this.silent) {
+      this.clearTimer();
+      this.startTimer();
+    }
   }
 
   startTimer() {
@@ -94,8 +108,35 @@ const Bot = {
           Bot.channels = Bot.channels.filter((c)=> c.id !== channelId);
           break;
         case "new_message":
+          const author = message.author;
           if (channel) {
-            channel.resetTimer();
+            if ((message.text === "@chatterbot lurk") && (author.isStreamer && author.isModerator)) {
+              channel.silence();
+              const response = {
+                command: "message",
+                identifier: gatewayIdentifier,
+                data: JSON.stringify({
+                  action: "send_message",
+                  text: "Sure thing! Just say '@chatterbot yo' when you want some more chats.",
+                  channelId: channelId,
+                })
+              };
+              ws.send(JSON.stringify(response));
+            } else if ((message.text === "@chatterbot yo") && (author.isStreamer && author.isModerator)) {
+              channel.resume();
+              const response = {
+                command: "message",
+                identifier: gatewayIdentifier,
+                data: JSON.stringify({
+                  action: "send_message",
+                  text: "Yo yo! If I get to noisy, just say '@chatterbot lurk', and I'll take a break.",
+                  channelId: channelId,
+                })
+              };
+              ws.send(JSON.stringify(response));
+            } else {
+              channel.resetTimer();
+            }
           }
           break;
         case "enter_stream":
@@ -117,6 +158,9 @@ const Bot = {
             }
           }
 
+          break;
+        default:
+          // ignore for now
           break;
       }
     }
