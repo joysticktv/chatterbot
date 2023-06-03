@@ -95,6 +95,21 @@ const getRandomMessage = (username)=> {
     `Here's a challenge: Can you come up with a tongue twister that's difficult to say five times fast?`,
     `Hey chat, what's the most interesting fact you've learned recently? Share your newfound knowledge!`,
     `@${username}, what's your favorite quote from a famous person or celebrity?`,
+    `Anyone wanna wrestle in some Jell-o?`,
+    `Are you a dip your toes in first, or jump right in person?`,
+    `Echo..... echo....`,
+    `Hello?`,
+    `The more you talk, the less I talk.`,
+    `If the streamer has a toy activate, your tips make them go bzzzzzz`,
+    `Of all the friends I've had, you're the first, @${username}.`,
+    `Allow me to introduce myself. I'm ChatterBot.`,
+    `Have you ever squished mashed potatoes and gravy between your toes? Yeah, me neither... 😬`,
+    `🤠 🤠 🤠`,
+    `How hot is @${username}, right? 🥵 `,
+    `Use the '!timers' command to see if there's any active timers.`,
+    `If you see a wheel, you must now spin it.`,
+    `.--- --- -.- . That's just a joke in morse code.`,
+    `You're sexy and you know it.`,
   ];
   return messages[Math.floor(Math.random() * messages.length)];
 }
