@@ -159,6 +159,15 @@ const Bot = {
           }
 
           break;
+        case "viewercountupdated":
+          if (!channel) {
+            channel = new Channel(channelId, (response)=> {
+              ws.send(JSON.stringify(response));
+            });
+            Bot.channels.push(channel);
+          }
+
+          break;
         default:
           // ignore for now
           break;
