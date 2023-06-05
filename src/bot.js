@@ -40,7 +40,9 @@ const Bot = {
               const response = buildResponse(randomMessage, id)
               ws.send(response);
             });
-            Bot.channels.push(channel);
+            if (!Bot.channels.map((c)=> c.id).includes(channelId)) {
+              Bot.channels.push(channel);
+            }
           }
           break;
         case "ended":
@@ -90,7 +92,9 @@ const Bot = {
               const response = buildResponse(randomMessage, id)
               ws.send(response);
             });
-            Bot.channels.push(channel);
+            if (!Bot.channels.map((c)=> c.id).includes(channelId)) {
+              Bot.channels.push(channel);
+            }
           }
 
           break;
