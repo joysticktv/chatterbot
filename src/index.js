@@ -12,45 +12,62 @@ const host = process.env.JOYSTICKTV_HOST;
 const clientId = process.env.JOYSTICKTV_CLIENT_ID;
 const clientSecret = process.env.JOYSTICKTV_CLIENT_SECRET;
 const wsHost = process.env.JOYSTICKTV_API_HOST;
-const accessToken = Buffer.from(clientId + ":" + clientSecret).toString("base64");
-const gatewayIdentifier = JSON.stringify({channel: "GatewayChannel"});
-const url = `${wsHost}?token=${accessToken}`;
-const ws = new WebSocket(url, ["actioncable-v1-json"]);
+const MAX_RECONNECT_ATTEMPTS = 3;
+var reconnectAttempts = 0;
 
-ws.on("open", function open() {
-  console.log("connection has opened")
-  const message = {
-    command: "subscribe",
-    identifier: gatewayIdentifier,
-  };
+const connectToServer = function() {
+  const accessToken = Buffer.from(clientId + ":" + clientSecret).toString("base64");
+  const gatewayIdentifier = JSON.stringify({channel: "GatewayChannel"});
+  const url = `${wsHost}?token=${accessToken}`;
+  const ws = new WebSocket(url, ["actioncable-v1-json"]);
 
-  ws.send(JSON.stringify(message));
-});
+  ws.on("open", function open() {
+    console.log("Connection has opened")
+    const message = {
+      command: "subscribe",
+      identifier: gatewayIdentifier,
+    };
 
-ws.on('error', console.error);
+    ws.send(JSON.stringify(message));
+  });
 
-ws.on('close', function close() {
-  console.log('connection has closed');
-});
+  ws.on('error', console.error);
 
-let connected = false;
+  ws.on('close', function close() {
+    console.log('Connection has closed');
 
-ws.on("message", function message(data) {
-  const receivedMessage = JSON.parse(data);
+    // Reset the channels
+    Bot.channels = [];
+    setTimeout(()=> {
+      console.log('Attempting reconnect')
+      if (reconnectAttempts <= MAX_RECONNECT_ATTEMPTS) {
+        reconnectAttempts++;
+        connectToServer();
+      }
+    }, 30000);
+  });
 
-  switch (receivedMessage.type) {
-    case "reject_subscription":
-      console.log("subscription to socket was rejected");
-      break;
-    case "confirm_subscription":
-      connected = true
-      break;
-  }
+  let connected = false;
 
-  if (connected) {
-    Bot.handleMessage(ws, receivedMessage);
-  }
-});
+  ws.on("message", function message(data) {
+    const receivedMessage = JSON.parse(data);
+
+    switch (receivedMessage.type) {
+      case "reject_subscription":
+        console.log("subscription to socket was rejected");
+        break;
+      case "confirm_subscription":
+        connected = true
+        break;
+    }
+
+    if (connected) {
+      Bot.handleMessage(ws, receivedMessage);
+    }
+  });
+}
+
+connectToServer();
 
 function pagePath(file) {
   return path.join(`${__dirname}/pages/${file}`)
