@@ -58,7 +58,7 @@ const Bot = {
               ws.send(response);
             } else if ((message.text === Bot.commands.resume) && Bot.allowedCommands(author)) {
               channel.resume();
-              const text = `Yo yo! If I get to noisy, just say '${Bot.commands.silence}', and I'll take a break.`;
+              const text = `Yo yo! If I get too noisy, just say '${Bot.commands.silence}', and I'll take a break.`;
               const response = buildResponse(text, channelId);
               ws.send(response);
             } else {
