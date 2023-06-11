@@ -16,6 +16,20 @@ export default class Channel {
     this.startTimer();
   }
 
+  get disconnected() {
+    return this.id === null;
+  }
+
+  // Ensure everything is reset
+  disconnect() {
+    this.clearTimer();
+    this.id = null;
+    this.usernames = [];
+    this.timer = null;
+    this.cb = (_n, _a)=> {};
+    this.silent = true;
+  }
+
   addUser(user) {
     this.usernames.push(user);
   }
