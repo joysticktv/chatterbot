@@ -46,7 +46,11 @@ const Bot = {
           }
           break;
         case "ended":
-          Bot.channels = Bot.channels.filter((c)=> c.id !== channelId);
+          if (channel) {
+            channel.disconnect();
+          }
+
+          Bot.channels = Bot.channels.filter((c)=> !c.disconnected);
           break;
         case "new_message":
           const author = message.author;
