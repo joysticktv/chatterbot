@@ -25,7 +25,6 @@ const Bot = {
   channels: [],
   handleMessage: (ws, receivedMessage)=> {
     if (receivedMessage.type === "ping") { return; }
-    console.log("RECEIVED MESSAGE", receivedMessage)
 
     if (receivedMessage.message) {
       const message = receivedMessage.message;
@@ -72,7 +71,6 @@ const Bot = {
           break;
         case "enter_stream":
           if (channel) {
-            console.log(message.text, "has entered the stream")
             user = {name: message.text, id: channelId};
             if (!channel.hasUser(user)) {
               channel.addUser(user);
@@ -82,7 +80,6 @@ const Bot = {
           break;
         case "leave_stream":
           if (channel) {
-            console.log(message.text, "has left the stream")
             user = {name: message.text, id: channelId};
             if (channel.hasUser(user)) {
               channel.removeUser(user);

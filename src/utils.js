@@ -12,3 +12,9 @@ export function waiverTime() {
 
   return times[Math.floor(Math.random() * times.length)];
 }
+
+export function log(message) {
+  if (process.env.NODE_ENV === "development") {
+    console.log(message);
+  }
+}
