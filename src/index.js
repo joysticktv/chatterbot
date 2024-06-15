@@ -57,6 +57,7 @@ const connectToServer = function() {
         console.log("subscription to socket was rejected");
         break;
       case "confirm_subscription":
+        console.log("subscription to socket confirmed");
         connected = true
         break;
     }
