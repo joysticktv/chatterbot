@@ -41,7 +41,7 @@ const getRandomMessage = (username)=> {
     `@${username} is sporting the Winnie the Pooh fashion, I see 😏`,
     `90s eurodance is the best music genre. Technotronic gets an honorable mention. Let's hear some Pump up the jam!`,
     `Posture check: @${username}. Be sure to stand and stretch.`,
-    `HAIL HYDRATE! Everyone drink some water.`,
+    `HYDRATE! Everyone drink some water.`,
     `If you're feeling anxious or stressed, just close your eyes, breath deep, and recite the lyrics to the 1992 hit song "Baby Got Back" by Sir Mix-a-Lot.`,
     `wooossaahhhh... L A face with an oakland booty.`,
     `It's time to kick ass, and chew bubble gum.... I'm all out of gum.`,
@@ -161,6 +161,7 @@ const getRandomMessage = (username)=> {
     `¿pɐǝɹ oʇ sᴉɥʇ sᴉ pɹɐɥ ʍoH`,
     `¿uǝǝɹɔs ǝɥʇ ɹo pɐǝɥ ɹnoʎ ʇlᴉʇ noʎ pᴉp`,
     `When you eat tacos, do you tilt your head, or the taco?`,
+    `To cook chicken in one slap it would require the velocity of 3725.95mph. Goku could do it.`
   ];
   return messages[Math.floor(Math.random() * messages.length)];
 }
