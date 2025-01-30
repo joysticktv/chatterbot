@@ -31,6 +31,7 @@ const Bot = {
       const channelId = message.channelId;
       let channel = Bot.channels.find((c)=> c.id === channelId);
       let user;
+      console.log("Getting new message:", message.type.toLowerCase())
 
       switch(message.type.toLowerCase()) {
         case "started":
