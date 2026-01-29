@@ -26,7 +26,7 @@ export default class Channel {
     this.id = null;
     this.usernames = [];
     this.timer = null;
-    this.cb = (_n, _a)=> {};
+    this.cb = (_n, _a) => {};
     this.silent = true;
   }
 
@@ -35,7 +35,7 @@ export default class Channel {
   addUser(user) {
     log(`Adding user ${user.name}`);
     this.usernames.push(user);
-    log(`TOTAL USERS ${this.usernames.length}`)
+    log(`TOTAL USERS ${this.usernames.length}`);
     if (!this.timer && !this.silent) {
       this.startTimer();
     }
@@ -44,7 +44,7 @@ export default class Channel {
   // When there's no one left in the channel, turn off the timer
   removeUser(user) {
     log(`Removing user ${user.name}`);
-    this.usernames = this.usernames.filter((u)=> u.name !== user.name);
+    this.usernames = this.usernames.filter((u) => u.name !== user.name);
 
     if (this.usernames.length === 0) {
       this.clearTimer();
@@ -80,8 +80,9 @@ export default class Channel {
   startTimer() {
     const runtime = 1000 * 60 * waiverTime();
     log(`Starting timer ${runtime}`);
-    this.timer = setInterval(()=> {
-      const user = this.usernames[Math.floor(Math.random() * this.usernames.length)];
+    this.timer = setInterval(() => {
+      const user =
+        this.usernames[Math.floor(Math.random() * this.usernames.length)];
       let randomMessage;
       if (user) {
         randomMessage = getRandomMessage(user.name);

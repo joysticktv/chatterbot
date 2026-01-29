@@ -1,5 +1,5 @@
 import Channel from "./channel.js";
-const gatewayIdentifier = JSON.stringify({channel: "GatewayChannel"});
+const gatewayIdentifier = JSON.stringify({ channel: "GatewayChannel" });
 
 const buildResponse = (text, channelId) => {
   const response = {
@@ -9,38 +9,39 @@ const buildResponse = (text, channelId) => {
       action: "send_message",
       text: text,
       channelId: channelId,
-    })
+    }),
   };
   return JSON.stringify(response);
-}
+};
 
 const Bot = {
   commands: {
-    silence: '@chatterbot lurk',
-    resume: '@chatterbot yo',
+    silence: "@chatterbot lurk",
+    resume: "@chatterbot yo",
   },
-  allowedCommands: (author)=> {
+  allowedCommands: (author) => {
     return author.isStreamer || author.isModerator;
   },
   channels: [],
-  handleMessage: (ws, receivedMessage)=> {
-    if (receivedMessage.type === "ping") { return; }
+  handleMessage: (ws, receivedMessage) => {
+    if (receivedMessage.type === "ping") {
+      return;
+    }
 
     if (receivedMessage.message) {
       const message = receivedMessage.message;
       const channelId = message.channelId;
-      let channel = Bot.channels.find((c)=> c.id === channelId);
+      let channel = Bot.channels.find((c) => c.id === channelId);
       let user;
-      console.log("Getting new message:", message.type.toLowerCase())
 
-      switch(message.type.toLowerCase()) {
+      switch (message.type.toLowerCase()) {
         case "started":
           if (!channel) {
-            channel = new Channel(channelId, (randomMessage, id)=> {
-              const response = buildResponse(randomMessage, id)
+            channel = new Channel(channelId, (randomMessage, id) => {
+              const response = buildResponse(randomMessage, id);
               ws.send(response);
             });
-            if (!Bot.channels.map((c)=> c.id).includes(channelId)) {
+            if (!Bot.channels.map((c) => c.id).includes(channelId)) {
               Bot.channels.push(channel);
             }
           }
@@ -50,17 +51,23 @@ const Bot = {
             channel.disconnect();
           }
 
-          Bot.channels = Bot.channels.filter((c)=> !c.disconnected);
+          Bot.channels = Bot.channels.filter((c) => !c.disconnected);
           break;
         case "new_message":
           const author = message.author;
           if (channel) {
-            if ((message.text === Bot.commands.silence) && Bot.allowedCommands(author)) {
+            if (
+              message.text === Bot.commands.silence &&
+              Bot.allowedCommands(author)
+            ) {
               channel.silence();
               const text = `Sure thing! Just say '${Bot.commands.resume}' when you want some more chats.`;
               const response = buildResponse(text, channelId);
               ws.send(response);
-            } else if ((message.text === Bot.commands.resume) && Bot.allowedCommands(author)) {
+            } else if (
+              message.text === Bot.commands.resume &&
+              Bot.allowedCommands(author)
+            ) {
               channel.resume();
               const text = `Yo yo! If I get too noisy, just say '${Bot.commands.silence}', and I'll take a break.`;
               const response = buildResponse(text, channelId);
@@ -72,7 +79,7 @@ const Bot = {
           break;
         case "enter_stream":
           if (channel) {
-            user = {name: message.text, id: channelId};
+            user = { name: message.text, id: channelId };
             if (!channel.hasUser(user)) {
               channel.addUser(user);
             }
@@ -81,7 +88,7 @@ const Bot = {
           break;
         case "leave_stream":
           if (channel) {
-            user = {name: message.text, id: channelId};
+            user = { name: message.text, id: channelId };
             if (channel.hasUser(user)) {
               channel.removeUser(user);
             }
@@ -90,11 +97,11 @@ const Bot = {
           break;
         case "viewercountupdated":
           if (!channel) {
-            channel = new Channel(channelId, (randomMessage, id)=> {
-              const response = buildResponse(randomMessage, id)
+            channel = new Channel(channelId, (randomMessage, id) => {
+              const response = buildResponse(randomMessage, id);
               ws.send(response);
             });
-            if (!Bot.channels.map((c)=> c.id).includes(channelId)) {
+            if (!Bot.channels.map((c) => c.id).includes(channelId)) {
               Bot.channels.push(channel);
             }
           }
@@ -105,7 +112,7 @@ const Bot = {
           break;
       }
     }
-  }
+  },
 };
 
 export default Bot;

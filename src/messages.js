@@ -1,4 +1,4 @@
-const getRandomMessage = (username)=> {
+const getRandomMessage = (username) => {
   // TODO: Handle this better when there's no one in chat
   username = username || "chatterbot";
   const messages = [
@@ -161,9 +161,9 @@ const getRandomMessage = (username)=> {
     `¿pɐǝɹ oʇ sᴉɥʇ sᴉ pɹɐɥ ʍoH`,
     `¿uǝǝɹɔs ǝɥʇ ɹo pɐǝɥ ɹnoʎ ʇlᴉʇ noʎ pᴉp`,
     `When you eat tacos, do you tilt your head, or the taco?`,
-    `To cook chicken in one slap it would require the velocity of 3725.95mph. Goku could do it.`
+    `To cook chicken in one slap it would require the velocity of 3725.95mph. Goku could do it.`,
   ];
   return messages[Math.floor(Math.random() * messages.length)];
-}
+};
 
 export default getRandomMessage;
