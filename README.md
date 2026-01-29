@@ -7,6 +7,35 @@ that are lurking, and sometimes include some helpful tips for using JoystickTV.
 
 Keep the bot quiet by talking in chat.
 
+## Setup
+
+1. Create a `.env` file
+
+```
+JOYSTICKTV_HOST="changeme"
+JOYSTICKTV_CLIENT_ID="changeme"
+JOYSTICKTV_CLIENT_SECRET="changeme"
+JOYSTICKTV_API_HOST="changeme"
+```
+
+2. Install dependencies
+
+```
+bun install
+```
+
+3. Run the server
+
+```
+bun src/index.js
+```
+
+4. Enable logs (optional)
+
+```
+NODE_ENV=development bun src/index.js
+```
+
 ## Bot commands
 
 The streamer and moderators can silence the chatterbot with
