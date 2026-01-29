@@ -5,3 +5,4 @@ config.json
 yarn-error.log
 logs/*
 pids/*
+bun.lock
