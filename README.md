@@ -1,3 +1,7 @@
+> [!IMPORTANT]
+> This application is meant to be an example with real functionality to allow developers to better understand our API.
+> This repo is not actively maintained, and has not been tested in any sort of real production use.
+
 # Joystick.TV ChatterBot
 
 This chat bot will post random messages to your chat when your chat gets quiet.
